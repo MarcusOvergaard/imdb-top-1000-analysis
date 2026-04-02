@@ -1,97 +1,174 @@
-# IMDB Top 1000 Movies Data Analysis
+# IMDb Top 1000 Movies Data Analysis
 
-This project provides a data analysis and visualization of the IMDB Top 1000 movies dataset. It includes a Jupyter Notebook for interactive exploration, a structured data analysis plan, and organized project directories for clarity and ease of use.
+An exploratory data analysis project built around a public IMDb Top 1000 dataset. The purpose is not to claim an objective truth about film quality, but to demonstrate a disciplined analytical workflow: define testable questions, clean and transform data, visualize findings, and discuss limitations without pretending the data says more than it does.
 
-## Table of Contents
+## Project Overview
 
-1.  [Project Overview](#project-overview)
-2.  [Getting Started](#getting-started)
-    *   [Prerequisites](#prerequisites)
-    *   [Installation](#installation)
-3.  [Project Structure](#project-structure)
-4.  [Data Analysis Plan](#data-analysis-plan)
-5.  [Hypotheses and Conclusions](#hypotheses-and-conclusions)
-6.  [Contributing](#contributing)
-7.  [License](#license)
+This project investigates three compact hypotheses about titles in the IMDb Top 1000 dataset:
 
-## 1. Project Overview
+1. Do titles tagged with **Drama** have a slightly higher average IMDb rating than the rest of the dataset?
+2. Is there a positive relationship between **number of votes** and **IMDb rating**?
+3. Are films from the **1990s** the most represented decade in the Top 1000 list?
 
-This repository contains an exploratory data analysis project focused on the IMDB Top 1000 movies. The goal is to investigate several hypotheses about movie characteristics, ratings, and historical trends using visualization and basic statistical methods.
+These are intentionally modest questions. They were chosen because they let me show category analysis, correlation analysis, temporal aggregation, and cautious interpretation in a reproducible way.
 
-## 2. Getting Started
+## Skills Demonstrated
+
+- Data loading and cleaning with **pandas**
+- Handling multi-label categorical data (`Genre`)
+- Exploratory data analysis and visualization with **matplotlib** and **seaborn**
+- Basic inferential statistics with a **Welch t-test**
+- Communicating limitations, bias, and interpretive uncertainty
+- Structuring a small project beyond a single notebook using a reusable Python module
+
+## Why this project matters
+
+The point of this repository is not just to produce three charts. It is to show the ability to:
+- turn vague intuitions into measurable hypotheses,
+- write reproducible analysis code,
+- separate reusable logic from notebook exploration,
+- communicate findings clearly,
+- and avoid overclaiming from biased data.
+
+## Dataset
+
+- **Source:** Kaggle
+- **Dataset:** [IMDb Dataset of Top 1000 Movies and TV Shows](https://www.kaggle.com/datasets/harshitshankhdhar/imdb-dataset-of-top-1000-movies-and-tv-shows)
+- **Local file:** `data/imdb_top_1000.csv`
+- **License:** CC0 1.0 Public Domain Dedication
+
+This is not a neutral sample of all cinema. Because it is already a curated top-list, the data likely reflects:
+- popularity bias,
+- survivorship bias,
+- platform-user bias,
+- and some recency effects.
+
+That makes it useful for exploratory work, but weak as evidence for universal claims about film quality.
+
+## Analytical Framing
+
+### Why these hypotheses?
+They form a compact EDA exercise that demonstrates practical skills:
+- category comparison,
+- relationship analysis,
+- decade-based aggregation,
+- and basic statistical checking.
+
+### Why should anyone care?
+Because in a portfolio project, the value is not the domain alone. The value is showing that raw columns can be turned into interpretable questions, evidence, and caveats.
+
+### Did I control for genre overlap?
+Partially. Genre-level averages are computed on an exploded genre table because a title can belong to multiple genres. For the inferential comparison, the notebook also evaluates a **Drama vs non-Drama** split at the title level.
+
+### Did I test statistical significance?
+Yes, in a limited way. The project includes a **Welch t-test** for Drama vs non-Drama. That is an improvement over comparing raw averages alone, but it is still a simple inferential check rather than a full model.
+
+### Is IMDb Top 1000 representative of film quality?
+No. It is better understood as a ranked perception-and-popularity dataset than an objective measure of artistic merit.
+
+## Results Summary
+
+Current results from the dataset:
+
+- **Drama average rating:** `7.959`
+- **Overall average rating:** `7.949`
+- **Votes / rating correlation:** `0.495`
+- **Most represented decade:** `2010s` with `242` titles
+- **Second most represented decade:** `2000s` with `237` titles
+- **1990s representation:** `150` titles
+
+Interpretation:
+- Drama titles score **slightly** higher on average, but the effect is small.
+- More-voted titles tend to have higher ratings within this dataset, with a **moderate positive correlation**.
+- The hypothesis that the **1990s dominate the Top 1000 is false** in this sample.
+
+## Figures
+
+The charts are generated programmatically from `src/analysis.py` and saved into `reports/figures/`.
+
+> Note: if the images are missing after cloning, run `python src/analysis.py` after installing the dependencies.
+
+### Average IMDb Rating by Genre
+![Average IMDb Rating by Genre](reports/figures/avg_rating_by_genre.png)
+
+### IMDb Rating vs Number of Votes
+![IMDb Rating vs Number of Votes](reports/figures/votes_vs_rating.png)
+
+### Number of Titles by Decade
+![Number of Titles by Decade](reports/figures/titles_by_decade.png)
+
+## Project Structure
+
+```text
+.
+├── README.md
+├── LICENSE
+├── requirements.txt
+├── data/
+│   └── imdb_top_1000.csv
+├── notebooks/
+│   └── Visualize.ipynb
+├── src/
+│   └── analysis.py
+├── reports/
+│   └── figures/
+│       ├── avg_rating_by_genre.png
+│       ├── votes_vs_rating.png
+│       └── titles_by_decade.png
+└── analysis_docs/
+    └── Data_Analysis_Plan.md
+```
+
+## Getting Started
 
 ### Prerequisites
-
-To run this project, you will need:
-*   Python 3.x
-*   Jupyter Notebook or Jupyter Lab
-*   `pandas` for data manipulation
-*   `matplotlib` for plotting
-*   `seaborn` for enhanced visualizations
+- Python 3.10+
+- pip
+- Jupyter Notebook or JupyterLab
 
 ### Installation
 
-1.  Clone this repository to your local machine:
-    ```bash
-    git clone https://github.com/MarcusOvergaard/imdb_analysis_project.git
-    cd imdb_analysis_project
-    ```
-    (Note: Replace `https://github.com/MarcusOvergaard/imdb_analysis_project.git` with the actual repository URL if this project were hosted.)
-
-2.  Install the required Python packages:
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-3.  Start Jupyter Notebook or Jupyter Lab:
-    ```bash
-    jupyter notebook
-    # or
-    jupyter lab
-    ```
-    Navigate to the `notebooks/` directory and open `Visualize.ipynb`.
-
-## 3. Project Structure
-
-The project is organized as follows:
-
-```
-.
-├── README.md                 
-├── requirements.txt          # Python dependencies
-├── GEMINI.md                 # Gemini CLI specific context and project description
-├── data/
-│   └── imdb_top_1000.csv     
-├── notebooks/
-│   └── Visualize.ipynb       # Jupyter Notebook for data analysis and visualizations
-└── analysis_docs/
-    └── Data_Analysis_Plan.md # Detailed plan of the data analysis, hypotheses, and conclusions
+```bash
+git clone https://github.com/MarcusOvergaard/imdb_analysis_project.git
+cd imdb_analysis_project
+pip install -r requirements.txt
 ```
 
-## 4. Data Analysis Plan
+### Run the notebook
 
-A detailed data analysis plan, including the rationale, data extraction methods, visualization plans, and confirmation/denial criteria for each hypothesis, can be found in `analysis_docs/Data_Analysis_Plan.md`.
+```bash
+jupyter lab
+```
 
-## 5. Hypotheses and Conclusions
+Then open `notebooks/Visualize.ipynb`.
 
-This project investigates three main hypotheses:
+### Generate the figures
 
-### Hypothesis 1: Movies belonging to the 'Drama' genre have a higher average IMDb rating compared to other genres in the top 1000 list.
-*   **Conclusion:** The hypothesis is **supported**. While the difference is marginal (Drama's average rating is slightly higher than the overall average), it indicates that Drama movies in the Top 1000 indeed have a very slightly elevated average rating. A deeper statistical test would be needed to confirm the statistical significance of this small difference.
+```bash
+python src/analysis.py
+```
 
-### Hypothesis 2: There is a positive correlation between the number of votes a movie receives and its IMDb rating.
-*   **Conclusion:** The hypothesis is **supported**. A Pearson correlation coefficient of 0.49 indicates a moderate positive correlation between the number of votes a movie receives and its IMDb rating. This suggests that movies with more votes tend to have higher ratings in this dataset.
+This recreates the charts in `reports/figures/` and prints a small numeric summary to the terminal.
 
-### Hypothesis 3: Movies released in the 1990s have a higher representation in the IMDb Top 1000 list compared to other decades.
-*   **Conclusion:** The hypothesis is **denied**. The 1990s (with 150 movies) do not have the highest representation in the IMDb Top 1000. Both the 2000s (237 movies) and the 2010s (242 movies) have a significantly higher number of films listed. This indicates that the most recent full decades (2000s and 2010s) are more heavily represented in the current IMDb Top 1000 list.
+## Limitations
 
-## 6. Contributing
+- The dataset is pre-filtered and not representative of all films.
+- Genre comparisons are imperfect because titles can belong to multiple genres.
+- Correlation between votes and ratings does not imply causation.
+- The t-test is a simple inferential check, not a complete modeling strategy.
+- The project emphasizes clarity and reproducibility over advanced modeling.
 
-Contributions are welcome! Please feel free to open issues or submit pull requests.
+## Future Improvements
 
-## 7. License
+- Control jointly for genre and release decade.
+- Compare IMDb rating with `Meta_score`, runtime, and gross revenue.
+- Add confidence intervals and stronger statistical reporting.
+- Build an interactive dashboard version in Streamlit or Plotly Dash.
 
-This project is licensed under the MIT License.
+## License
 
-The dataset (IMDb Top 1000) was obtained from Kaggle and is distributed under the MIT License by the original author.
-Original source: https://www.kaggle.com/datasets/debanganghosh/imdb-dataset
+This repository is released under **CC0 1.0 Universal**.
+
+Dataset source and license:
+- Kaggle: https://www.kaggle.com/datasets/harshitshankhdhar/imdb-dataset-of-top-1000-movies-and-tv-shows
+- CC0 1.0: https://creativecommons.org/publicdomain/zero/1.0/
