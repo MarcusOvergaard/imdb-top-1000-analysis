@@ -46,8 +46,6 @@ No. It is better understood as a list based on user ratings and popularity than 
 - **Most represented decade:** `2010s` with `242` titles
 - **Second most represented decade:** `2000s` with `237` titles
 - **1990s representation:** `150` titles
-
-Interpretation:
 - Drama titles score **slightly** higher on average, but the effect is small.
 - Movies with more votes tend to have higher ratings within this dataset, with a **moderate positive correlation**.
 - The data does not support the hypothesis that the 1990s was the most represented decade.
