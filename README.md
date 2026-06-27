@@ -27,7 +27,7 @@ These questions let me demonstrate several common exploratory data analysis tech
 - **Local file:** `data/imdb_top_1000.csv`
 - **License:** CC0 1.0 Public Domain Dedication
 
-## Notes
+## Methodology
 
 ### Did I control for genre overlap?
 Partially. Genre averages are calculated after splitting movies into individual genres, because one movie can belong to multiple genres. For the comparison, the notebook also evaluates a **Drama vs non-Drama** split at the title level.
